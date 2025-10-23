@@ -1,0 +1,22 @@
+# Ignore everything
+*
+
+# Except the important dotfiles
+!.zshrc
+!.profile
+!.zprofile
+
+# Ensure .gitignore is tracked (needed to allow Git to track changes)
+!.gitignore
+
+# Ensure the repository metadata is tracked
+!README.md
+!LICENSE
+
+# Add any other important directories explicitly
+# Example: Un-ignore the directory if you want to track it:
+# !.vscode/
+
+# Ensure empty directories are tracked by adding a .gitkeep (if necessary)
+# Example:
+# !.vscode/.gitkeep
