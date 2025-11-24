@@ -20,7 +20,7 @@ zstyle ':omz:update' mode reminder  # Just remind to update
 zstyle ':omz:update' frequency 13    # Check for updates every 13 days
 
 # Enable command auto-correction
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -87,3 +87,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export HOMEBREW_ARCH=arm64
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

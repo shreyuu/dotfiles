@@ -5,6 +5,19 @@
 !.zshrc
 !.profile
 !.zprofile
+!.bashrc
+!.bash_profile
+!.bash_logout
+!.gitconfig
+!.vimrc
+!.tmux.conf
+!.config/nvim/
+!.config/kitty/
+!.config/alacritty/
+!.config/fish/
+!.config/starship.toml
+!.config/htop/
+!.p10k.zsh
 
 # Ensure .gitignore is tracked (needed to allow Git to track changes)
 !.gitignore
