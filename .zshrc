@@ -9,39 +9,50 @@ export ZSH="$HOME/.oh-my-zsh"
 # Set the theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Use hyphen-insensitive completion (disable case-sensitive completion)
+# Use hyphen-insensitive completion
 HYPHEN_INSENSITIVE="true"
 
 # Auto-update settings
-zstyle ':omz:update' mode reminder  # Just remind to update
-zstyle ':omz:update' frequency 13    # Check for updates every 13 days
+zstyle ':omz:update' mode reminder
+zstyle ':omz:update' frequency 13
 
-# Enable command auto-correction
+# Command auto-correction
 ENABLE_CORRECTION="false"
 
-# Uncomment the following line to display red dots whilst waiting for completion.
+# Show dots while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Increase history file size and settings
+# History configuration
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-setopt append_history    # Append history instead of overwriting
-setopt share_history     # Share history across all sessions
+setopt append_history
+setopt share_history
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Set list of plugins to load
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting brew macos npm docker docker-compose kubectl aws gcloud terraform golang pip pyenv history sudo alias-finder extract themes web-search)
+# Plugins
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  brew
+  macos
+  npm
+  docker
+  docker-compose
+  kubectl
+  aws
+  gcloud
+  terraform
+  golang
+  pip
+  pyenv
+  history
+  sudo
+  alias-finder
+  extract
+  themes
+  web-search
+)
 
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
@@ -52,42 +63,49 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
-# Preferred editor for local and remote sessions
+# Preferred editor
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='vim'
 fi
 
-# Custom aliases
+# Aliases
 alias zshconfig="nano ~/.zshrc"
 alias p10kconfig="nano ~/.p10k.zsh"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Custom functions
 function cdback() {
-    cd $(fc -l 1 | head -n 1)  # Go to last directory from history
+  cd "$(fc -l 1 | head -n 1)"
 }
 
-# zsh-autosuggestions setup
+# zsh-autosuggestions config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# Load syntax highlighting (ensure this is sourced last for better performance)
+# Load syntax highlighting (must be near the end)
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Load Powerlevel10k theme
+# Powerlevel10k theme
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Homebrew paths
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export HOMEBREW_ARCH=arm64
 
+# Android SDK
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
