@@ -126,3 +126,5 @@ unset ANTHROPIC_AUTH_TOKEN
 unset ANTHROPIC_BASE_URL
 unset ANTHROPIC_MODEL
 unset ANTHROPIC_API_KEY
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
