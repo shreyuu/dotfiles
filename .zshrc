@@ -246,4 +246,7 @@ fi
 # Start Pixel 9 emulator without snapshots or data reset
 alias pixel9='adb start-server >/dev/null 2>&1 && emulator -avd Pixel_9 -no-snapshot-load -no-snapshot-save -gpu host'
 # Close the running Android emulator and stop ADB
-alias pixel9off='adb emu kill >/dev/null 2>&1; adb kill-server >/dev/null 2>&1; echo "Pixel 9 emulator powered off."'
+alias pixel9off='adb emu kill >/dev/null 2>&1; adb kill-server >/dev/null 2>&1; echo "Pixel 9 emulator powered off."'export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator
