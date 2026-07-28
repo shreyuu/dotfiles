@@ -57,6 +57,14 @@ setopt extended_history
 
 
 # ============================================================
+# zsh-autosuggestions configuration
+# ============================================================
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+
+# ============================================================
 # Oh My Zsh plugins
 # Keep zsh-syntax-highlighting as the final plugin
 # ============================================================
@@ -133,12 +141,10 @@ fi
 
 export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
 
-# Retained for compatibility with software that still uses ANDROID_HOME
+# Retained for tools that still use ANDROID_HOME
 export ANDROID_HOME="$ANDROID_SDK_ROOT"
 
-export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH"
-export PATH="$ANDROID_SDK_ROOT/platform-tools:$PATH"
-export PATH="$ANDROID_SDK_ROOT/emulator:$PATH"
+export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$PATH"
 
 
 # ============================================================
@@ -180,7 +186,7 @@ export VISUAL="$EDITOR"
 
 
 # ============================================================
-# Aliases
+# General aliases
 # ============================================================
 
 alias zshconfig="nano ~/.zshrc"
@@ -195,6 +201,41 @@ alias ...="cd ../.."
 
 
 # ============================================================
+# Android emulator aliases
+# ============================================================
+
+# List installed Android emulators
+alias avds='emulator -list-avds'
+
+# Show connected Android devices and running emulators
+alias androiddevices='adb devices -l'
+
+# Start Pixel 9 without loading or saving snapshots
+alias pixel9='adb start-server >/dev/null 2>&1 && emulator -avd Pixel_9 -no-snapshot-load -no-snapshot-save -gpu host'
+
+# Start Pixel Tablet Gaming without loading or saving snapshots
+alias pixeltablet='adb start-server >/dev/null 2>&1 && emulator -avd Pixel_Tablet_Gaming -no-snapshot-load -no-snapshot-save -gpu host -netdelay none -netspeed full'
+
+# Short Pixel Tablet alias
+alias tablet='pixeltablet'
+
+# Rotate the currently running Android emulator
+alias androidrotate='adb emu rotate'
+
+# Force the running emulator into portrait mode
+alias androidportrait='adb shell settings put system accelerometer_rotation 0 && adb shell settings put system user_rotation 0'
+
+# Force the running emulator into landscape mode
+alias androidlandscape='adb shell settings put system accelerometer_rotation 0 && adb shell settings put system user_rotation 1'
+
+# Restore automatic screen rotation
+alias androidautorotate='adb shell settings put system accelerometer_rotation 1'
+
+# Open Google Play Store
+alias playstore='adb shell am start -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -p com.android.vending'
+
+
+# ============================================================
 # Custom functions
 # ============================================================
 
@@ -203,13 +244,32 @@ cdback() {
   builtin cd -
 }
 
+# Shut down all running Android emulators and stop ADB
+androidoff() {
+  local serials
+  local serial
 
-# ============================================================
-# zsh-autosuggestions configuration
-# ============================================================
+  serials="$(adb devices | awk '/^emulator-[0-9]+[[:space:]]+device$/ {print $1}')"
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+  if [[ -z "$serials" ]]; then
+    echo "No running Android emulator found."
+    adb kill-server >/dev/null 2>&1
+    return 0
+  fi
+
+  while IFS= read -r serial; do
+    if [[ -n "$serial" ]]; then
+      adb -s "$serial" emu kill >/dev/null 2>&1
+    fi
+  done <<< "$serials"
+
+  adb kill-server >/dev/null 2>&1
+  echo "Android emulator powered off."
+}
+
+alias pixel9off='androidoff'
+alias pixeltabletoff='androidoff'
+alias tabletoff='androidoff'
 
 
 # ============================================================
@@ -242,11 +302,3 @@ unset ANTHROPIC_API_KEY
 if [[ -e "$HOME/.iterm2_shell_integration.zsh" ]]; then
   source "$HOME/.iterm2_shell_integration.zsh"
 fi
-
-# Start Pixel 9 emulator without snapshots or data reset
-alias pixel9='adb start-server >/dev/null 2>&1 && emulator -avd Pixel_9 -no-snapshot-load -no-snapshot-save -gpu host'
-# Close the running Android emulator and stop ADB
-alias pixel9off='adb emu kill >/dev/null 2>&1; adb kill-server >/dev/null 2>&1; echo "Pixel 9 emulator powered off."'export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator
