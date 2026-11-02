@@ -33,3 +33,5 @@
 # Ensure empty directories are tracked by adding a .gitkeep (if necessary)
 # Example:
 # !.vscode/.gitkeep
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
