@@ -302,3 +302,4 @@ unset ANTHROPIC_API_KEY
 if [[ -e "$HOME/.iterm2_shell_integration.zsh" ]]; then
   source "$HOME/.iterm2_shell_integration.zsh"
 fi
+unsetopt AUTO_CD
