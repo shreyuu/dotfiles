@@ -303,3 +303,4 @@ if [[ -e "$HOME/.iterm2_shell_integration.zsh" ]]; then
   source "$HOME/.iterm2_shell_integration.zsh"
 fi
 unsetopt AUTO_CD
+alias netmon=~/NetworkMonitor/bin/netmon
